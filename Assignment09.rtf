@@ -1,0 +1,123 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 select contactLastname, contactFirstname from customers order by contactLastname;\
+\
+select contactLastname, contactFirstname from customers order by contactLastname DESC,contactFirstName ASC;\
+\
+select lastname, firstname, jobtitle from employees where jobtitle='Sales Rep';\
+\
+select officecode, lastname, firstname, jobtitle from employees where jobtitle='Sales Rep' and officecode=1;\
+\
+select officecode, lastname, firstname, jobtitle from employees where jobtitle='Sales Rep' or officecode=1;\
+\
+select officecode, lastname, firstname from employees where officecode between 1 and 3;\
+\
+select lastname, firstname from employees where lastname like '%son';\
+\
+select officecode, lastname, firstname from employees where officecode in (1,2,3);\
+\
+select distinct lastname from employees order by lastname;\
+\
+select productCode, productName,buyPrice from products where buyPrice between 90 and 100;\
+\
+select employeeNumber, lastName, firstName from employees where firstName like 'a%';\
+\
+select employeeNumber, lastName, firstName from employees where firstName like '%a';\
+\
+select contactLastname, contactFirstname from customers order by contactLastname limit 5;\
+\
+select customerName, country, salesrepemployeenumber from customers where salesrepemployeeNumber is null order by customerName;\
+\
+select customerName, country, salesrepemployeenumber from customers where salesrepemployeeNumber is not null order by customerName;\
+\
+select concat_ws(',',lastName, firstName)as 'fullName' from employees;\
+\
+select e.firstName, e.lastName from employees e order by e.firstName;\
+\
+CREATE TABLE members (\
+    member_id INT AUTO_INCREMENT,\
+    name VARCHAR(100),\
+    PRIMARY KEY (member_id)\
+);\
+\
+CREATE TABLE committees (\
+    committee_id INT AUTO_INCREMENT,\
+    name VARCHAR(100),\
+    PRIMARY KEY (committee_id)\
+);\
+\
+INSERT INTO members(name)\
+VALUES('John'),('Jane'),('Mary'),('David'),('Amelia');\
+\
+INSERT INTO committees(name)\
+VALUES('John'),('Mary'),('Amelia'),('Joe');\
+\
+select m.member_id, m.name as member, c.committee_id, c.name as committee \
+from members m \
+inner join committees c on c.name=m.name;\
+\
+select * from members;\
+\
+select m.member_id, m.name as member, c.committee_id, c.name as committee \
+from members m \
+inner join committees c using(name);\
+\
+select m.member_id, m.name as member, c.committee_id, c.name as committee \
+from members m \
+left join committees c using(name);\
+\
+select m.member_id, m.name as member, c.committee_id, c.name as committee \
+from members m \
+right join committees c using(name);\
+\
+select m.member_id, m.name as member, c.committee_id, c.name as committee \
+from members m \
+cross join committees c ;\
+\
+SELECT \
+    CONCAT(m.lastName, ', ', m.firstName) AS Manager,\
+    CONCAT(e.lastName, ', ', e.firstName) AS 'Direct report'\
+FROM\
+    employees e\
+INNER JOIN employees m ON \
+    m.employeeNumber = e.reportsTo\
+ORDER BY \
+    Manager;\
+    \
+SELECT status \
+FROM orders \
+GROUP BY status;\
+\
+SELECT status, COUNT(*) \
+FROM orders \
+GROUP BY status;\
+\
+SELECT \
+  ordernumber, \
+  SUM(quantityOrdered) AS itemsCount, \
+  SUM(priceeach * quantityOrdered) AS total \
+FROM \
+  orderdetails \
+GROUP BY \
+  ordernumber \
+HAVING \
+  total > 1000;\
+  \
+SELECT lastName, firstName\
+FROM employees\
+WHERE officeCode IN (SELECT officeCode FROM offices\
+WHERE country = 'USA');\
+\
+select firstName from employees \
+except select contactFirstName from customers;\
+\
+select firstName from employees \
+intersect select contactFirstName from customers;\
+\
+\
+}
